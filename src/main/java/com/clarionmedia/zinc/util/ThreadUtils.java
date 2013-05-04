@@ -5,6 +5,11 @@ import java.util.concurrent.TimeUnit;
 
 public class ThreadUtils {
 
+    /**
+     * Attempts to gracefully shutdown the given {@link ExecutorService}.
+     *
+     * @param threadPool the {@code ExecutorService} to shutdown
+     */
     public static void shutdownAndAwaitTermination(ExecutorService threadPool) {
         if (threadPool == null)
             return;
@@ -24,4 +29,5 @@ public class ThreadUtils {
             Thread.currentThread().interrupt();
         }
     }
+
 }

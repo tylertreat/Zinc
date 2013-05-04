@@ -1,4 +1,4 @@
-package com.clarionmedia.zinc.messaging;
+package com.clarionmedia.zinc.endpoint;
 
 /**
  * Event listener that listens for when clients are added to a {@link HostEndpoint}.

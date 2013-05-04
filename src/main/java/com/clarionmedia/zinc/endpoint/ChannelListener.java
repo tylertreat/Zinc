@@ -1,4 +1,4 @@
-package com.clarionmedia.zinc.messaging;
+package com.clarionmedia.zinc.endpoint;
 
 /**
  * A {@code ChannelListener} is responsible for listening for incoming messages and delegating them to a

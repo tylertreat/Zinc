@@ -1,4 +1,4 @@
-package com.clarionmedia.zinc.messaging;
+package com.clarionmedia.zinc.endpoint;
 
 /**
  * A {@code Peer} is an {@link Endpoint} identified by an address and a port.

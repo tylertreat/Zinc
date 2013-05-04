@@ -1,4 +1,4 @@
-package com.clarionmedia.zinc.messaging;
+package com.clarionmedia.zinc.endpoint;
 
 /**
  * A {@code MessageHandlerFactory} is used to build new {@link MessageHandler} instances to be used by

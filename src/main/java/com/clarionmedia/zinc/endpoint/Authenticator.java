@@ -1,4 +1,4 @@
-package com.clarionmedia.zinc.messaging;
+package com.clarionmedia.zinc.endpoint;
 
 /**
  * Describes how to authenticate a connection request from a client.

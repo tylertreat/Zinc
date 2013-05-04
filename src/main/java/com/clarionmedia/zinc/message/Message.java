@@ -1,7 +1,7 @@
-package com.clarionmedia.zinc.messaging;
+package com.clarionmedia.zinc.message;
 
 /**
- * Represents a message sent from an {@link Endpoint}.
+ * Represents a message sent from an {@link com.clarionmedia.zinc.endpoint.Endpoint}.
  */
 public interface Message {
 

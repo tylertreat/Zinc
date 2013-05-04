@@ -1,4 +1,4 @@
-package com.clarionmedia.zinc.messaging;
+package com.clarionmedia.zinc.endpoint;
 
 /**
  * {@code HostEndpoint} represents the notion of a "host" in a distributed client-host

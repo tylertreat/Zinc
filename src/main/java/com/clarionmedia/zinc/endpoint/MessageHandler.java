@@ -1,6 +1,7 @@
-package com.clarionmedia.zinc.messaging;
+package com.clarionmedia.zinc.endpoint;
 
-import com.clarionmedia.zinc.messaging.Message.MessageType;
+import com.clarionmedia.zinc.message.Message;
+import com.clarionmedia.zinc.message.Message.MessageType;
 
 /**
  * A {@code MessageHandler} is used to react to a message that has been received by an {@link Endpoint}.

@@ -1,4 +1,6 @@
-package com.clarionmedia.zinc.messaging;
+package com.clarionmedia.zinc.endpoint;
+
+import com.clarionmedia.zinc.message.Message;
 
 /**
  * An {@code Endpoint} is a single node in the application cluster. It has the ability to both transmit and receive
@@ -33,7 +35,7 @@ public interface Endpoint {
     void closeInboundChannel();
 
     /**
-     * Transmits the given {@link Message}.
+     * Transmits the given {@link com.clarionmedia.zinc.message.Message}.
      *
      * @param message the {@code Message} to send
      * @return {@code true} if the send was successful, {@code false} otherwise
