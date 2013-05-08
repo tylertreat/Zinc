@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.clarionmedia.zinc.endpoint.impl;
+package com.clarionmedia.zinc.endpoint.impl.jmq;
 
 import com.clarionmedia.zinc.endpoint.Authenticator;
 import com.clarionmedia.zinc.endpoint.ClientAddedListener;
 import com.clarionmedia.zinc.endpoint.HostEndpoint;
 import com.clarionmedia.zinc.endpoint.MessageHandlerFactory;
 import com.clarionmedia.zinc.util.ThreadUtils;
-import org.zeromq.ZMQ;
+import org.jeromq.ZMQ;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -34,10 +34,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * Implementation of {@link HostEndpoint} which represents the notion of a "host" in a distributed client-host cluster
+ * Implementation of {@link com.clarionmedia.zinc.endpoint.HostEndpoint} which represents the notion of a "host" in a distributed client-host cluster
  * application. This implementation relies on ZeroMQ for communication.
  */
-public class ZmqHostEndpoint extends AbstractZmqEndpoint implements HostEndpoint {
+public class JmqHostEndpoint extends AbstractJmqEndpoint implements HostEndpoint {
 
     private ConnectionManager connectionManager;
     private Authenticator authenticator;
@@ -48,9 +48,9 @@ public class ZmqHostEndpoint extends AbstractZmqEndpoint implements HostEndpoint
      * Creates a new {@code ZmqHostEndpoint} instance.
      *
      * @param port                  the port to bind to
-     * @param messageHandlerFactory the {@link MessageHandlerFactory} to use for handling incoming messages
+     * @param messageHandlerFactory the {@link com.clarionmedia.zinc.endpoint.MessageHandlerFactory} to use for handling incoming messages
      */
-    public ZmqHostEndpoint(int port, MessageHandlerFactory messageHandlerFactory) {
+    public JmqHostEndpoint(int port, MessageHandlerFactory messageHandlerFactory) {
         super(port, ZMQ.PULL, messageHandlerFactory);
         discoveryPort = 0;
         connectionManager = new ConnectionManager();
@@ -61,10 +61,10 @@ public class ZmqHostEndpoint extends AbstractZmqEndpoint implements HostEndpoint
      * Creates a new {@code ZmqHostEndpoint} instance.
      *
      * @param port                  the port to bind to
-     * @param messageHandlerFactory the {@link MessageHandlerFactory} to use for handling incoming messages
-     * @param authenticator         the {@link Authenticator} to use to authenticate connection requests
+     * @param messageHandlerFactory the {@link com.clarionmedia.zinc.endpoint.MessageHandlerFactory} to use for handling incoming messages
+     * @param authenticator         the {@link com.clarionmedia.zinc.endpoint.Authenticator} to use to authenticate connection requests
      */
-    public ZmqHostEndpoint(int port, MessageHandlerFactory messageHandlerFactory, Authenticator authenticator) {
+    public JmqHostEndpoint(int port, MessageHandlerFactory messageHandlerFactory, Authenticator authenticator) {
         this(port, messageHandlerFactory);
         this.authenticator = authenticator;
     }
@@ -74,9 +74,9 @@ public class ZmqHostEndpoint extends AbstractZmqEndpoint implements HostEndpoint
      *
      * @param port                  the port to bind to
      * @param discoveryPort         the port to bind to for listening for connection requests
-     * @param messageHandlerFactory the {@link MessageHandlerFactory} to use for handling incoming messages
+     * @param messageHandlerFactory the {@link com.clarionmedia.zinc.endpoint.MessageHandlerFactory} to use for handling incoming messages
      */
-    public ZmqHostEndpoint(int port, int discoveryPort, MessageHandlerFactory messageHandlerFactory) {
+    public JmqHostEndpoint(int port, int discoveryPort, MessageHandlerFactory messageHandlerFactory) {
         super(port, ZMQ.PULL, messageHandlerFactory);
         this.discoveryPort = discoveryPort;
     }
@@ -86,10 +86,10 @@ public class ZmqHostEndpoint extends AbstractZmqEndpoint implements HostEndpoint
      *
      * @param port                  the port to bind to
      * @param discoveryPort         the port to bind to for listening for connection requests
-     * @param messageHandlerFactory the {@link MessageHandlerFactory} to use for handling incoming messages
-     * @param authenticator         the {@link Authenticator} to use to authenticate connection requests
+     * @param messageHandlerFactory the {@link com.clarionmedia.zinc.endpoint.MessageHandlerFactory} to use for handling incoming messages
+     * @param authenticator         the {@link com.clarionmedia.zinc.endpoint.Authenticator} to use to authenticate connection requests
      */
-    public ZmqHostEndpoint(int port, int discoveryPort, MessageHandlerFactory messageHandlerFactory,
+    public JmqHostEndpoint(int port, int discoveryPort, MessageHandlerFactory messageHandlerFactory,
                            Authenticator authenticator) {
         super(port, ZMQ.PULL, messageHandlerFactory);
         this.discoveryPort = discoveryPort;
@@ -203,9 +203,9 @@ public class ZmqHostEndpoint extends AbstractZmqEndpoint implements HostEndpoint
                     //    so all of the clients are accepted.
                     if (authenticator == null) {
                         // Just add the peer (client) if there's no Authenticator
-                        ZmqHostEndpoint.this.addClient(address, port);
+                        JmqHostEndpoint.this.addClient(address, port);
                         // Indicator, to the client, that we connected well.
-                        outputStream.writeUTF("1 " + ZmqHostEndpoint.this.port);
+                        outputStream.writeUTF("1 " + JmqHostEndpoint.this.port);
                         // make sure it really goes (down) get the plunger!
                         outputStream.flush();
 
@@ -214,8 +214,8 @@ public class ZmqHostEndpoint extends AbstractZmqEndpoint implements HostEndpoint
                         DataInputStream inputStream = new DataInputStream(connection.getInputStream());
                         String token = inputStream.readUTF(); // Blocking call
                         if (authenticator.isAuthenticated(address, port, token)) {
-                            ZmqHostEndpoint.this.addClient(address, port);
-                            outputStream.writeUTF("1 " + ZmqHostEndpoint.this.port);
+                            JmqHostEndpoint.this.addClient(address, port);
+                            outputStream.writeUTF("1 " + JmqHostEndpoint.this.port);
                             outputStream.flush();
                         } else {
                             System.out.println("Connection request from " + address + ":" + port + " is not " +

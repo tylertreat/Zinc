@@ -14,18 +14,20 @@
  * limitations under the License.
  */
 
-package com.clarionmedia.zinc.endpoint.impl;
+package com.clarionmedia.zinc.endpoint.impl.jmq;
 
 import com.clarionmedia.zinc.endpoint.Endpoint;
 import com.clarionmedia.zinc.endpoint.MessageHandlerFactory;
 import com.clarionmedia.zinc.endpoint.Peer;
+import com.clarionmedia.zinc.endpoint.impl.AbstractChannelListener;
 import com.clarionmedia.zinc.util.ThreadUtils;
-import org.zeromq.ZMQ;
+import org.jeromq.ZMQ;
 
 /**
- * Concrete implementation of {@link AbstractChannelListener} which relies on ZeroMQ for communication.
+ * Concrete implementation of {@link com.clarionmedia.zinc.endpoint.impl.AbstractChannelListener} which relies on
+ * JeroMQ for communication.
  */
-public class ZmqChannelListener extends AbstractChannelListener {
+public class JmqChannelListener extends AbstractChannelListener {
 
     private int type;
     private ZMQ.Socket socket;
@@ -33,14 +35,14 @@ public class ZmqChannelListener extends AbstractChannelListener {
     /**
      * Creates a new {@code ZmqChannelListener} instance.
      *
-     * @param endpoint              the {@link Endpoint} this {@code AbstractChannelListener} belongs to
+     * @param endpoint              the {@link com.clarionmedia.zinc.endpoint.Endpoint} this {@code AbstractChannelListener} belongs to
      * @param address               the address to connect to
      * @param port                  the port to connect to
      * @param type                  the ZMQ socket type
-     * @param messageHandlerFactory the {@link MessageHandlerFactory} to use to construct
+     * @param messageHandlerFactory the {@link com.clarionmedia.zinc.endpoint.MessageHandlerFactory} to use to construct
      *                              {@link com.clarionmedia.zinc.endpoint.MessageHandler} instances
      */
-    public ZmqChannelListener(Endpoint endpoint, String address, int port, int type,
+    public JmqChannelListener(Endpoint endpoint, String address, int port, int type,
                               MessageHandlerFactory messageHandlerFactory) {
         this(endpoint, type, messageHandlerFactory);
         Peer peer = new Peer(address, port);
@@ -50,12 +52,12 @@ public class ZmqChannelListener extends AbstractChannelListener {
     /**
      * Creates a new {@code ZmqChannelListener} instance.
      *
-     * @param endpoint              the {@link Endpoint} this {@code AbstractChannelListener} belongs to
+     * @param endpoint              the {@link com.clarionmedia.zinc.endpoint.Endpoint} this {@code AbstractChannelListener} belongs to
      * @param type                  the ZMQ socket type
-     * @param messageHandlerFactory the {@link MessageHandlerFactory} to use to construct
+     * @param messageHandlerFactory the {@link com.clarionmedia.zinc.endpoint.MessageHandlerFactory} to use to construct
      *                              {@link com.clarionmedia.zinc.endpoint.MessageHandler} instances
      */
-    public ZmqChannelListener(Endpoint endpoint, int type, MessageHandlerFactory messageHandlerFactory) {
+    public JmqChannelListener(Endpoint endpoint, int type, MessageHandlerFactory messageHandlerFactory) {
         super(endpoint, messageHandlerFactory);
         this.type = type;
     }

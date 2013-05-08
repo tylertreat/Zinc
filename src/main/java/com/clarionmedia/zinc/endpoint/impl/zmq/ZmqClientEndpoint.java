@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.clarionmedia.zinc.endpoint.impl;
+package com.clarionmedia.zinc.endpoint.impl.zmq;
 
 import com.clarionmedia.zinc.endpoint.MessageHandlerFactory;
 import com.clarionmedia.zinc.message.Message;

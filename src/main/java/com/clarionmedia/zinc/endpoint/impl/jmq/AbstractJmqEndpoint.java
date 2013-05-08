@@ -14,19 +14,22 @@
  * limitations under the License.
  */
 
-package com.clarionmedia.zinc.endpoint.impl;
+package com.clarionmedia.zinc.endpoint.impl.jmq;
 
 import com.clarionmedia.zinc.endpoint.Endpoint;
 import com.clarionmedia.zinc.endpoint.MessageHandlerFactory;
+import com.clarionmedia.zinc.endpoint.impl.AbstractChannelListener;
+import com.clarionmedia.zinc.endpoint.impl.zmq.ZmqChannelListener;
 import com.clarionmedia.zinc.message.Message;
-import org.zeromq.ZMQ;
+import org.jeromq.ZMQ;
 
 import java.util.UUID;
 
 /**
- * Abstract implementation of {@link Endpoint} containing common code for ZeroMQ implementations.
+ * Abstract implementation of {@link com.clarionmedia.zinc.endpoint.Endpoint} containing common code for JeroMQ
+ * implementations.
  */
-public abstract class AbstractZmqEndpoint implements Endpoint {
+public abstract class AbstractJmqEndpoint implements Endpoint {
 
     protected AbstractChannelListener abstractChannelListener;
     protected ZMQ.Socket socket;
@@ -41,9 +44,9 @@ public abstract class AbstractZmqEndpoint implements Endpoint {
      * @param hostPort              the host port to connect to
      * @param port                  the port to bind to for sending messages
      * @param type                  the ZMQ socket type
-     * @param messageHandlerFactory the {@link MessageHandlerFactory} to use
+     * @param messageHandlerFactory the {@link com.clarionmedia.zinc.endpoint.MessageHandlerFactory} to use
      */
-    public AbstractZmqEndpoint(String hostAddress, int hostPort, int port, int type, MessageHandlerFactory
+    public AbstractJmqEndpoint(String hostAddress, int hostPort, int port, int type, MessageHandlerFactory
             messageHandlerFactory) {
         this.abstractChannelListener = new ZmqChannelListener(this, hostAddress, hostPort, type, messageHandlerFactory);
         this.port = port;
@@ -54,16 +57,16 @@ public abstract class AbstractZmqEndpoint implements Endpoint {
      * Creates a new {@code AbstractZmqEndpoint} instance.
      *
      * @param type                  the ZMQ socket type
-     * @param messageHandlerFactory the {@link MessageHandlerFactory} to use
+     * @param messageHandlerFactory the {@link com.clarionmedia.zinc.endpoint.MessageHandlerFactory} to use
      */
-    public AbstractZmqEndpoint(int port, int type, MessageHandlerFactory messageHandlerFactory) {
+    public AbstractJmqEndpoint(int port, int type, MessageHandlerFactory messageHandlerFactory) {
         this.abstractChannelListener = new ZmqChannelListener(this, type, messageHandlerFactory);
         this.port = port;
         this.id = UUID.randomUUID().toString();
     }
 
     /**
-     * Creates a {@link org.zeromq.ZMQ.Socket} for use by the {@link Endpoint}.
+     * Creates a {@link org.zeromq.ZMQ.Socket} for use by the {@link com.clarionmedia.zinc.endpoint.Endpoint}.
      *
      * @param context the {@link org.zeromq.ZMQ.Context} to use to acquire the socket
      * @return {@code ZMQ.Socket}
